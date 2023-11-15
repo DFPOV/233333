@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Demonstration</title>
+    <style>
+       :root {
+            --header-footer-bg-color: #24292e;
+            --header-footer-text-color: #ffffff;
+            --nav-bg-color: #36454F;
+            --nav-hover-bg-color: #0366d6;
+            --link-color: #ffffff;
+            --git-link-bg-color: #2d333b;
+            --git-link-color: #4f83cc;
+            --text-color: #586069;
+            --bg-color: #3a4048;
+            --accent-bg-color: #5a9bd5;
+            --nav-ul-li-color: #020d19;
+            --nav-a-color: #000000;
+            --h1-color: #707070;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            line-height: 1.5;
+            margin: 0;
+            background: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header, footer {
+            background: var(--header-footer-bg-color);
+            color: var(--header-footer-text-color);
+            padding: 1rem 0;
+        }
+
+        footer p {
+            text-align: center;
+            margin: 0;
+
+        }
+
+        header h1{
+            text-align: center;
+            margin: 10;
+            color: var(--h1-color);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            border-radius: 75px;
+            background: var(--nav-bg-color);
+        }
+
+        nav ul li {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            border-radius: 25px;
+            font-family: 'Courier New', Courier, monospace;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+		nav ul li:hover {
+    		transform: scale(1.5);
+	    	z-index: 10;
+	    	position: relative;
+		}
+
+        nav a {
+            text-decoration: none;
+            color: var(--nav-a-color);
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--accent-bg-color);
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::after {
+            content: '';
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--link-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease-in-out;
+            transform-origin: bottom left;
+            position: absolute;
+            bottom: 0;
+            left: 0; 
+        }
+
+        nav a:hover {
+            background: var(--nav-hover-bg-color);
+            color: var(--link-color);
+        }
+
+        nav a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .container {
+            flex: 1;
+            max-width: 960px;
+            margin: auto;
+            padding: 2rem;
+        }
+
+        main {
+            background: #c8d5e8;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        h2 {
+            color: var(--accent-bg-color);
+            border-bottom: 1px solid var(--accent-bg-color);
+            padding-bottom: .3rem;
+        }
+
+        p, li {
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        p {
+            background: none;
+            border-left: none;
+            padding: 0;
+            font-style: normal;
+        }
+
+        p:before {
+            content: none;
+        }
+
+        footer p {
+            font-size: 0.875rem;
+        }
+
+        @media (min-width: 768px) {
+            nav ul li {
+                margin: 0 15px;
+            }
+
+            nav a {
+                font-size: 1.2rem;
+            }
+
+            footer p {
+                font-size: 1rem;
+            }
+        }
+
+        #git-commands {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        #git-commands ul {
+            list-style-type: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        #git-commands a {
+            text-decoration: none;
+            color: var(--text-color);
+            background-color: var(--accent-bg-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            height: auto;
+            margin: 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        #git-commands a::after {
+            height: 3px; 
+        }
+
+        #command-info {
+            display: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -100px; 
+            width: 300px; 
+            background: white;
+            padding: 1rem;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        #git-commands a:hover, #git-commands a:focus {
+            background-color: var(--git-link-bg-color);
+            color: var(--git-link-color);
+            transform: scale(1.05);
+        }
+
+        @media (min-width: 768px) {
+            #git-commands ul {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        #git-commands li:hover #command-info,
+        #git-commands li:focus #command-info {
+            display: block;
+        }
+
+        .github-icon {
+            animation: float 2s ease-in-out infinite;
+        }
+
+        .interactive:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+
+        .command{
+            background: var(--nav-hover-bg-color);
+            color: var(--link-color);
+        }
+
+        .blur-effect *:not(:hover){
+            filter: blur(2px);
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>GitHub Demo</h1>
+        <nav>
+            <ul>
+                <li><a href="homepage.html">Homepage</a></li>
+                <li><a href="introduction.html">Introduction</a></li>
+                <li><a href="setup-repo.html">Setup Repository</a></li>
+                <li><a class = "command" href="git-commands.html">--Git Commands--</a></li>
+                <li><a href="github-actions.html">GitHub Actions</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main>
+            <section id="git-commands">
+                <h2>Git Commands</h2>
+                <nav>
+                    <ul>
+                        <li><a href="git-clone.html">git-clone</a></li>
+                        <li><a href="git-add.html">git-add</a></li>
+                        <li><a href="git-commit.html">git-commit</a></li>
+                        <li><a href="git-push.html">git-push</a></li>
+                    </ul>
+                </nav>
+            </section>
+        </main>
+    </div>
+
+    <div id="command-info"></div>
+
+    <script>
+        // 图片和描述的详细信息
+        const commandDetails = {
+            //在这里加入图片和描述
+            'git-clone.html': {
+                img: 'git-clone.png',
+                desc: 'Clone a repository into a new directory.'
+            },
+            'git-add.html': {
+                img: 'git-add.png',
+                desc: 'Add file contents to the index.'
+            },
+            'git-commit.html': {
+                img: 'git-commit.png',
+                desc: 'Record changes to the repository.'
+            },
+            'git-push.html': {
+                img: 'git-push.png',
+                desc: 'Update remote refs along with associated objects.'
+            }
+        };
+    
+        // 控制模糊效果的函数
+        function applyBlur() {
+            document.querySelector('.container').classList.add('blur-effect');
+            document.querySelector('footer').classList.add('blur-effect');
+            document.querySelector('header').classList.add('blur-effect');
+        }
+    
+        function removeBlur() {
+            document.querySelectorAll('.blur-effect').forEach(element => {
+                element.classList.remove('blur-effect');
+            });
+        }
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('nav a');
+            const gitCommands = document.querySelectorAll('#git-commands a');
+            const commandInfo = document.getElementById('command-info');
+    
+            // 处理导航链接的鼠标悬停
+            navLinks.forEach(link => {
+                link.addEventListener('mouseenter', applyBlur);
+                link.addEventListener('mouseleave', removeBlur);
+            });
+    
+            // 处理命令链接的鼠标悬停
+            gitCommands.forEach(command => {
+                command.addEventListener('mouseenter', function() {
+                    const commandName = command.getAttribute('href');
+                    removeBlur(); // 移除其他地方的模糊效果
+                    if (commandDetails[commandName]) {
+                        const details = commandDetails[commandName];
+                        commandInfo.innerHTML = `
+                            <img src="path/to/${details.img}" alt="${commandName}">
+                            <p>${details.desc}</p>
+                        `;
+                        commandInfo.style.display = 'block';
+                        commandInfo.style.top = `${command.getBoundingClientRect().bottom}px`;
+                        commandInfo.style.left = `${command.getBoundingClientRect().left}px`;
+                    }
+                });
+    
+                command.addEventListener('mouseleave', function() {
+                    commandInfo.style.display = 'none';
+                    commandInfo.innerHTML = '';
+                });
+            });
+    
+            // 当鼠标悬停在 commandInfo 上时，保持页面的其他部分模糊
+            commandInfo.addEventListener('mouseenter', function() {
+                applyBlur();
+            });
+    
+            commandInfo.addEventListener('mouseleave', function() {
+                removeBlur();
+            });
+        });
+    </script>
+
+    <footer>
+        <p>Git-Commands Page</p>
+        <p>By github actions group B</p>
+    </footer>
+</body>
+</html>
